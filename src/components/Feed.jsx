@@ -32,7 +32,7 @@ const Feed = () => {
             setLoading(false);
         };
     }, []);
-    console.log(searchResults.length);
+    
     return (
         <div>
             <div className="flex no-scrollbar dark:text-white py-3 text-sm overflow-scroll">
@@ -40,7 +40,7 @@ const Feed = () => {
                     .filter((item) => item.type === "category")
                     .map((item, index) => (
                         <pre
-                            className="bg-zinc-900 cursor-pointer px-3 py-2 mx-1 rounded-lg"
+                            className="bg-zinc-900 cursor-pointer px-3 py-2 mx-1 rounded-lg hover:bg-zinc-700 transition-all"
                             onClick={() => {
                                 setSelectedCategory(item.name);
                             }}
