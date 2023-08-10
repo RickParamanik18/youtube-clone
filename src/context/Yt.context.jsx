@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react";
 import { fetchYoutubeData } from "../utils/api.util";
 
-export const Context = createContext();
+export const ytContext = createContext();
 
-export const YtContext = (props) => {
+export const YtContextProvider = (props) => {
     const [loading, setLoading] = useState(true);
     const [searchResults, setSearchResults] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("New");
@@ -12,12 +12,12 @@ export const YtContext = (props) => {
         setLoading(true);
         fetchYoutubeData(`/search/?q=${selectedCategory}`).then((data) => {
             console.log(data);
-            setSearchResults(data);
+            setSearchResults(data.contents);
             setLoading(false);
         });
     }, [selectedCategory]);
     return (
-        <Context.Provider
+        <ytContext.Provider
             value={{
                 loading,
                 setLoading,
@@ -28,6 +28,6 @@ export const YtContext = (props) => {
             }}
         >
             {props.children}
-        </Context.Provider>
+        </ytContext.Provider>
     );
 };
