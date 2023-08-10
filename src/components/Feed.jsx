@@ -23,7 +23,6 @@ const Feed = () => {
                 setLoading(true);
                 fetchYoutubeData(`/search/?q=${selectedCategory}`)
                     .then((data) => {
-                        console.log({ data });
                         setSearchResults((prev) => [...prev, ...data.contents]);
                         setLoading(false);
                     })

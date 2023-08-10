@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const VideoCard = ({ value }) => {
     if (value.video) {
-        console.log({ value });
         const {
             videoId,
             title,

@@ -11,7 +11,6 @@ export const YtContextProvider = (props) => {
     useEffect(() => {
         setLoading(true);
         fetchYoutubeData(`/search/?q=${selectedCategory}`).then((data) => {
-            console.log(data);
             setSearchResults(data.contents);
             setLoading(false);
         });
