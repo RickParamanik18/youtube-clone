@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const VideoCard = ({ value }) => {
+const VideoCard = ({ value, cardType }) => {
     if (value.video) {
         const {
             videoId,
@@ -21,14 +21,20 @@ const VideoCard = ({ value }) => {
             setVideoThumbnail(thumbnails[0].url);
         }, []);
 
+        const isBelowLg = () => window.innerWidth < 1024;
+
         return (
             <div
-                className="flex justify-center mx-3 my-6 cursor-pointer"
+                className=" mx-3 my-6 cursor-pointer"
                 onMouseOver={() => setVideoThumbnail(movingThumbnails[0].url)}
                 onMouseOut={() => setVideoThumbnail(thumbnails[0].url)}
             >
                 <div
-                    className="max-w-md"
+                    className={`max-w-md ${
+                        cardType === "tile" && !isBelowLg()
+                            ? "grid grid-cols-2"
+                            : ""
+                    }`}
                     onClick={() => navigate(`/watch/?v=${videoId}`)}
                 >
                     <img
@@ -37,8 +43,23 @@ const VideoCard = ({ value }) => {
                         className="md:w-96 w-full rounded-xl"
                         alt={title}
                     />
-                    <div className="flex md:w-96 w-full mt-3">
-                        <div className="pt-2 h-13 w-13">
+                    <div
+                        className={`abcd flex w-full ${
+                            cardType === "tile" && !isBelowLg()
+                                ? "ml-3 "
+                                : "mt-3"
+                        } ${
+                            (cardType === "tile" && isBelowLg()) ||
+                            cardType !== "tile"
+                                ? "md:w-96"
+                                : ""
+                        }`}
+                    >
+                        <div
+                            className={`pt-2 h-13 w-13 ${
+                                cardType === "tile" ? "hidden" : ""
+                            }`}
+                        >
                             <img
                                 src={author.avatar[0].url}
                                 alt={author.title}
@@ -46,13 +67,15 @@ const VideoCard = ({ value }) => {
                                 title={author.title}
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    navigate(`/channel/${author.channelId}`);
+                                    navigate(`/channel/${author.channelId}`, {
+                                        redirect: true,
+                                    });
                                 }}
                             />
                         </div>
                         <div className="ml-3">
                             <p
-                                className="dark:text-white text-base font-medium leading-5"
+                                className="dark:text-white text-base font-medium leading-5 two-line"
                                 title={title}
                             >
                                 {title}

@@ -5,7 +5,8 @@ import { ytContext } from "../context/Yt.context";
 import { fetchYoutubeData } from "../utils/api.util";
 import { categories } from "../utils/constants.jsx";
 
-const Feed = () => {
+const Feed = (props) => {
+    const { cardType = "" } = props;
     const {
         searchResults,
         loading,
@@ -31,7 +32,9 @@ const Feed = () => {
             setLoading(false);
         };
     }, []);
-    
+
+    const isBelowLg = () => window.innerWidth < 1024;
+
     return (
         <div>
             <div className="flex no-scrollbar dark:text-white py-3 text-sm overflow-scroll">
@@ -49,10 +52,20 @@ const Feed = () => {
                         </pre>
                     ))}
             </div>
-            <div className="video-container flex flex-wrap justify-center">
+            <div
+                className={
+                    cardType !== "tile" || isBelowLg()
+                        ? "flex flex-wrap justify-center"
+                        : ""
+                }
+            >
                 {searchResults.length && !loading ? (
                     searchResults?.map((item, index) => (
-                        <VideoCard value={item} key={index} />
+                        <VideoCard
+                            value={item}
+                            key={index}
+                            cardType={cardType}
+                        />
                     ))
                 ) : (
                     <Loader />

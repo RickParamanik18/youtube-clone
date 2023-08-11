@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { formatStats } from "../utils/helper.util";
 import { useNavigate } from "react-router-dom";
+import Feed from "../components/Feed";
 
 const Videopage = (props) => {
     const [videoDetail, setVideoDetail] = useState({});
@@ -19,12 +20,12 @@ const Videopage = (props) => {
             console.log(data);
             setVideoDetail(data);
         });
-    }, []);
+    }, [history.length]);
 
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-3 dark:text-white lg:px-18 md:px-10">
-                <div className="col-span-2 m-5">
+                <div className="col-span-2 my-5 mx-3">
                     <ReactPlayer
                         url={`https://www.youtube.com/watch${location.search}`}
                         controls
@@ -142,7 +143,9 @@ const Videopage = (props) => {
                     </div>
                 </div>
 
-                <div className="m-5">feed to be added</div>
+                <div className="my-5 mx-3">
+                    <Feed cardType="tile" />
+                </div>
             </div>
             <ToastContainer />
         </>
