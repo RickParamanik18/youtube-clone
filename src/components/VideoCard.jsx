@@ -29,7 +29,7 @@ const VideoCard = ({ value }) => {
             >
                 <div
                     className="max-w-md"
-                    onClick={() => navigate(`/watch/?q=${videoId}`)}
+                    onClick={() => navigate(`/watch/?v=${videoId}`)}
                 >
                     <img
                         src={videoThumbnail}
